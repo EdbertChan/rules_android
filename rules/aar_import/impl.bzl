@@ -171,6 +171,7 @@ def _process_resources(
         host_javabase = _common.get_host_javabase(ctx),
         instrument_xslt = _utils.only(_get_android_toolchain(ctx).add_g3itr_xslt.files.to_list()),
         xsltproc = _get_android_toolchain(ctx).xsltproc_tool.files_to_run,
+        link_library_resources = True,
     )
 
     native_android_manifest = manifest

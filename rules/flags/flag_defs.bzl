@@ -98,3 +98,15 @@ def define_flags():
         default = False,
         description = "Enables namespaced R class generation",
     )
+
+    flags.DEFINE_bool(
+        name = "output_library_merged_assets",
+        default = True,
+        description = "If disabled, does not produce merged asset.zip outputs for library targets",
+    )
+
+    flags.DEFINE_bool(
+        name = "link_library_resources",
+        default = True,
+        description = "If disabled, resource linking will be skipped on android libraries",
+    )
