@@ -40,7 +40,14 @@ def android_binary_macro(**attrs):
       **attrs: Rule attributes
     """
 
+    outputs = {}
+    if "proguard_generate_mapping" in attrs and attrs["proguard_generate_mapping"] :
+        outputs["proguard_mapping"] =  "%{name}"  + "_proguard.map"
+
     android_binary_internal_macro(
-        internal_rule = android_binary,
-        **attrs
+        **dict(
+            attrs,
+            internal_rule = android_binary,
+            outputs = outputs,
+        )
     )

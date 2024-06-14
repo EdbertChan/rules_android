@@ -95,6 +95,7 @@ def process_r8(ctx, validation_ctx, jvm_ctx, packaged_resources_ctx, build_info_
     args.add("--lib", android_jar)
     args.add_all(neverlink_jars, before_each = "--lib")
     args.add(deploy_jar)  # jar to optimize + desugar + dex
+    args.add("--pg-compat")
 
     java.run(
         ctx = ctx,
@@ -114,6 +115,7 @@ def process_r8(ctx, validation_ctx, jvm_ctx, packaged_resources_ctx, build_info_
         # R8 preserves the Java resources (i.e. non-Java-class files) in its output zip, so no need
         # to provide a Java resources zip.
         java_resource_jar = None,
+        final_proguard_output_map = proguard_mappings_file,
     )
 
     return ProviderInfo(
