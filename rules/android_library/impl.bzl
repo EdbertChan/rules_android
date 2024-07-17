@@ -13,6 +13,9 @@
 # limitations under the License.
 """Implementation."""
 
+load("@rules_java//java/common:java_info.bzl", "JavaInfo")
+load("@rules_java//java/common:java_plugin_info.bzl", "JavaPluginInfo")
+load("@rules_java//java/common:proguard_spec_info.bzl", "ProguardSpecInfo")
 load("//rules:acls.bzl", "acls")
 load("//rules:attrs.bzl", _attrs = "attrs")
 load("//rules:common.bzl", _common = "common")
@@ -31,9 +34,6 @@ load("//rules:resources.bzl", _resources = "resources")
 load("//rules:utils.bzl", "get_android_sdk", "get_android_toolchain", "log", "utils")
 load("//rules:visibility.bzl", "PROJECT_VISIBILITY")
 load("//rules/flags:flags.bzl", _flags = "flags")
-load("@rules_java//java/common:java_info.bzl", "JavaInfo")
-load("@rules_java//java/common:java_plugin_info.bzl", "JavaPluginInfo")
-load("@rules_java//java/common:proguard_spec_info.bzl", "ProguardSpecInfo")
 
 visibility(PROJECT_VISIBILITY)
 
@@ -446,7 +446,7 @@ def _process_coverage(ctx, **unused_ctx):
                 coverage_common.instrumented_files_info(
                     ctx,
                     source_attributes = ["srcs"],
-                    dependency_attributes = ["assets", "deps", "exports"],
+                    dependency_attributes = ["assets", "deps", "exports", "associates"],
                 ),
             ],
         ),
