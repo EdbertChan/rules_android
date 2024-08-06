@@ -698,7 +698,6 @@ def _compile(
         args.add("--rTxtOut", out_r_txt)
         optional_outputs.append(out_r_txt)
 
-    args.add("--targetLabel", ctx.label)
     optional_inputs = []
     if manifest:
         args.add("--manifest", manifest)
