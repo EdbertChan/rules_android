@@ -110,16 +110,21 @@ def _aspect_impl(target, ctx):
         for jar in runtime_jars:
             if not ignore_desugar:
                 unique_desugar_filename = (jar.path if basename_clash else jar.basename) + "_desugared.jar"
-                desugared_jar = _dex.get_dx_artifact(ctx, unique_desugar_filename, min_sdk_version)
-                _desugar.desugar(
-                    ctx,
-                    input = jar,
-                    output = desugared_jar,
-                    bootclasspath = bootclasspath,
-                    classpath = compiletime_classpath,
-                    min_sdk_version = min_sdk_version,
-                    desugar_exec = ctx.executable._desugar_java8,
-                )
+
+                # Skip desugaring action for android resource jars
+                if not unique_desugar_filename.endswith("_resources.jar_desugared.jar"):
+                    desugared_jar = _dex.get_dx_artifact(ctx, unique_desugar_filename, min_sdk_version)
+                    _desugar.desugar(
+                        ctx,
+                        input = jar,
+                        output = desugared_jar,
+                        bootclasspath = bootclasspath,
+                        classpath = compiletime_classpath,
+                        min_sdk_version = min_sdk_version,
+                        desugar_exec = ctx.executable._desugar_java8,
+                    )
+                else:
+                    desugared_jar = None
             else:
                 desugared_jar = None
 
